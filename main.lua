@@ -248,17 +248,39 @@ local function apply_style_table(component, style)
 		return component
 	end
 	-- Apply manually
-	if style.fg          then component:fg(style.fg)  end
-	if style.bg          then component:bg(style.bg)  end
-	if style.bold        then component:bold()        end
-	if style.dim         then component:dim()         end
-	if style.italic      then component:italic()      end
-	if style.underline   then component:underline()   end
-	if style.blink       then component:blink()       end
-	if style.blink_rapid then component:blink_rapid() end
-	if style.reverse     then component:reverse()     end
-	if style.hidden      then component:hidden()      end
-	if style.crossed     then component:crossed()     end
+	if style.fg then
+		component:fg(style.fg)
+	end
+	if style.bg then
+		component:bg(style.bg)
+	end
+	if style.bold then
+		component:bold()
+	end
+	if style.dim then
+		component:dim()
+	end
+	if style.italic then
+		component:italic()
+	end
+	if style.underline then
+		component:underline()
+	end
+	if style.blink then
+		component:blink()
+	end
+	if style.blink_rapid then
+		component:blink_rapid()
+	end
+	if style.reverse then
+		component:reverse()
+	end
+	if style.hidden then
+		component:hidden()
+	end
+	if style.crossed then
+		component:crossed()
+	end
 	return component
 end
 
@@ -650,7 +672,7 @@ function Yatline.string.get:tab_path(trimmed, max_length, trim_length)
 	local finder = cx.active.finder
 
 	local t = {}
-	if cwd.is_search then
+	if cwd.spec.is_search then
 		t[#t + 1] = string.format("search: %s", cwd.domain)
 	end
 	if filter then
@@ -697,7 +719,7 @@ function Yatline.string.get:search_query(key)
 
 	local cwd = cx.active.current.cwd
 
-	if cwd.is_search then
+	if cwd.spec.is_search then
 		return string.format("%s %s", key, cwd.domain)
 	else
 		return ""
@@ -1000,7 +1022,7 @@ function Yatline.coloreds.get:count(filter, zero_check)
 
 	if filter then
 		local files_count_fg, files_count_icon
-		if cx.active.current.files.filter or cx.active.current.cwd.is_search then
+		if cx.active.current.files.filter or cx.active.current.cwd.spec.is_search then
 			files_count_fg = Yatline.config.filtereds.fg
 			files_count_icon = Yatline.config.filtereds.icon
 		else
